@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Container, Card, Button, Input } from '../components/common';
+import { Card, Button, Input } from '../components/common';
 import { useAuthStore } from '../store/authStore';
+import * as S from '../styles/Auth.styled';
 
 export const Login = ({ setCurrentPage }) => {
   const { login } = useAuthStore();
@@ -34,29 +35,15 @@ export const Login = ({ setCurrentPage }) => {
   };
   
   return (
-    <Container style={{ 
-      display: 'flex', 
-      justifyContent: 'center', 
-      alignItems: 'center', 
-      minHeight: '600px' 
-    }}>
+    <S.AuthContainer>
       <Card style={{ width: '100%', maxWidth: '450px', padding: '40px' }}>
-        <div style={{ textAlign: 'center', marginBottom: '30px' }}>
-           <span style={{ fontSize: '48px', marginBottom: '10px', display: 'block' }}>
-             {isLogin ? '🔐' : '👋'}
-           </span>
-           <h1 style={{ 
-            fontSize: '32px', 
-            marginBottom: '10px', 
-            color: '#1f2937',
-            fontWeight: '800'
-          }}>
-            {isLogin ? '로그인' : '회원가입'}
-          </h1>
-          <p style={{ color: '#6b7280' }}>
+        <S.AuthHeader>
+           <S.Icon>{isLogin ? '🔐' : '👋'}</S.Icon>
+           <S.Title>{isLogin ? '로그인' : '회원가입'}</S.Title>
+          <S.Subtitle>
             {isLogin ? 'TIA 태권도 선교단에 오신 것을 환영합니다.' : '새로운 계정을 생성하여 시작하세요.'}
-          </p>
-        </div>
+          </S.Subtitle>
+        </S.AuthHeader>
         
         {!isLogin && (
           <Input
@@ -90,24 +77,13 @@ export const Login = ({ setCurrentPage }) => {
           {isLogin ? '로그인하기' : '가입하기'}
         </Button>
         
-        <p style={{ textAlign: 'center', color: '#6b7280', fontSize: '14px' }}>
+        <S.Footer>
           {isLogin ? '계정이 없으신가요?' : '이미 계정이 있으신가요?'}
-          <button
-            onClick={() => setIsLogin(!isLogin)}
-            style={{
-              background: 'none',
-              border: 'none',
-              color: '#EA580C', // 오렌지색 링크
-              fontWeight: '700',
-              cursor: 'pointer',
-              marginLeft: '8px',
-              textDecoration: 'underline'
-            }}
-          >
+          <S.LinkButton onClick={() => setIsLogin(!isLogin)}>
             {isLogin ? '회원가입' : '로그인'}
-          </button>
-        </p>
+          </S.LinkButton>
+        </S.Footer>
       </Card>
-    </Container>
+    </S.AuthContainer>
   );
 };

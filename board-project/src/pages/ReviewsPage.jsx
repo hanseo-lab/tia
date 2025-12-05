@@ -1,34 +1,27 @@
 import React, { useState } from 'react';
 import { Container, Card, Button } from '../components/common';
 import { usePerformanceStore } from '../store/performanceStore';
+import * as S from '../styles/ReviewsPage.styled';
 
 export const ReviewsPage = ({ setCurrentPage }) => {
   const { performances, reviews } = usePerformanceStore();
-  const [filterRating, setFilterRating] = useState('all'); // all, 5, 4, 3, 2, 1
-  const [sortBy, setSortBy] = useState('recent'); // recent, rating
+  const [filterRating, setFilterRating] = useState('all');
+  const [sortBy, setSortBy] = useState('recent');
   
-  // 필터링
   const filteredReviews = filterRating === 'all'
     ? reviews
     : reviews.filter(r => r.rating === parseInt(filterRating));
   
-  // 정렬
   const sortedReviews = [...filteredReviews].sort((a, b) => {
-    if (sortBy === 'recent') {
-      return new Date(b.date) - new Date(a.date);
-    }
-    if (sortBy === 'rating') {
-      return b.rating - a.rating;
-    }
+    if (sortBy === 'recent') return new Date(b.date) - new Date(a.date);
+    if (sortBy === 'rating') return b.rating - a.rating;
     return 0;
   });
   
-  // 평균 평점 계산
   const averageRating = reviews.length > 0
     ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
     : 0;
   
-  // 평점별 개수
   const ratingCounts = {
     5: reviews.filter(r => r.rating === 5).length,
     4: reviews.filter(r => r.rating === 4).length,
@@ -39,94 +32,33 @@ export const ReviewsPage = ({ setCurrentPage }) => {
   
   return (
     <Container>
-      {/* 페이지 헤더 */}
-      <div style={{ marginBottom: '40px' }}>
-        <h1 style={{ 
-          fontSize: '36px', 
-          marginBottom: '10px', 
-          color: '#1f2937',
-          fontWeight: 'bold'
-        }}>
-          📝 전체 공연 후기
-        </h1>
-        <p style={{ 
-          fontSize: '16px', 
-          color: '#6b7280',
-          lineHeight: '1.6'
-        }}>
-          관람하신 공연에 대한 생생한 후기를 만나보세요
-        </p>
-      </div>
+      <S.PageHeader>
+        <h1>📝 전체 공연 후기</h1>
+        <p>관람하신 공연에 대한 생생한 후기를 만나보세요</p>
+      </S.PageHeader>
       
-      {/* 통계 카드 */}
-      <div style={{ 
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-        gap: '20px',
-        marginBottom: '40px'
-      }}>
-        {/* 총 후기 수 */}
-        <Card style={{ 
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-          color: 'white',
-          textAlign: 'center'
-        }}>
-          <p style={{ fontSize: '14px', marginBottom: '10px', opacity: 0.9 }}>
-            총 후기 수
-          </p>
-          <p style={{ fontSize: '36px', fontWeight: 'bold', margin: 0 }}>
-            {reviews.length}
-          </p>
+      <S.StatGrid>
+        <Card style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white', textAlign: 'center' }}>
+          <p style={{ fontSize: '14px', marginBottom: '10px', opacity: 0.9 }}>총 후기 수</p>
+          <p style={{ fontSize: '36px', fontWeight: 'bold', margin: 0 }}>{reviews.length}</p>
         </Card>
         
-        {/* 평균 평점 */}
-        <Card style={{ 
-          background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
-          color: 'white',
-          textAlign: 'center'
-        }}>
-          <p style={{ fontSize: '14px', marginBottom: '10px', opacity: 0.9 }}>
-            평균 평점
-          </p>
-          <p style={{ fontSize: '36px', fontWeight: 'bold', margin: 0 }}>
-            ⭐ {averageRating}
-          </p>
+        <Card style={{ background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', color: 'white', textAlign: 'center' }}>
+          <p style={{ fontSize: '14px', marginBottom: '10px', opacity: 0.9 }}>평균 평점</p>
+          <p style={{ fontSize: '36px', fontWeight: 'bold', margin: 0 }}>⭐ {averageRating}</p>
         </Card>
         
-        {/* 5점 후기 */}
-        <Card style={{ 
-          background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-          color: 'white',
-          textAlign: 'center'
-        }}>
-          <p style={{ fontSize: '14px', marginBottom: '10px', opacity: 0.9 }}>
-            5점 만점 후기
-          </p>
-          <p style={{ fontSize: '36px', fontWeight: 'bold', margin: 0 }}>
-            {ratingCounts[5]}
-          </p>
+        <Card style={{ background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', color: 'white', textAlign: 'center' }}>
+          <p style={{ fontSize: '14px', marginBottom: '10px', opacity: 0.9 }}>5점 만점 후기</p>
+          <p style={{ fontSize: '36px', fontWeight: 'bold', margin: 0 }}>{ratingCounts[5]}</p>
         </Card>
-      </div>
+      </S.StatGrid>
       
-      {/* 필터 & 정렬 */}
       <Card style={{ marginBottom: '30px' }}>
-        <div style={{ 
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: '30px'
-        }}>
-          {/* 평점 필터 */}
+        <S.FilterContainer>
           <div>
-            <label style={{ 
-              display: 'block', 
-              marginBottom: '15px', 
-              fontWeight: '600',
-              color: '#374151',
-              fontSize: '14px'
-            }}>
-              ⭐ 평점 필터
-            </label>
-            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+            <S.FilterLabel>⭐ 평점 필터</S.FilterLabel>
+            <S.ButtonGroup>
               <Button
                 onClick={() => setFilterRating('all')}
                 variant={filterRating === 'all' ? 'primary' : 'secondary'}
@@ -144,21 +76,12 @@ export const ReviewsPage = ({ setCurrentPage }) => {
                   {rating}⭐ ({ratingCounts[rating]})
                 </Button>
               ))}
-            </div>
+            </S.ButtonGroup>
           </div>
           
-          {/* 정렬 */}
           <div>
-            <label style={{ 
-              display: 'block', 
-              marginBottom: '15px', 
-              fontWeight: '600',
-              color: '#374151',
-              fontSize: '14px'
-            }}>
-              🔽 정렬
-            </label>
-            <div style={{ display: 'flex', gap: '8px' }}>
+            <S.FilterLabel>🔽 정렬</S.FilterLabel>
+            <S.ButtonGroup>
               <Button
                 onClick={() => setSortBy('recent')}
                 variant={sortBy === 'recent' ? 'primary' : 'secondary'}
@@ -173,186 +96,75 @@ export const ReviewsPage = ({ setCurrentPage }) => {
               >
                 평점 높은순
               </Button>
-            </div>
+            </S.ButtonGroup>
           </div>
-        </div>
+        </S.FilterContainer>
       </Card>
       
-      {/* 후기 개수 */}
-      <div style={{ 
-        marginBottom: '20px',
-        color: '#6b7280',
-        fontSize: '14px'
-      }}>
-        총 <strong style={{ color: '#667eea' }}>{sortedReviews.length}개</strong>의 후기
-      </div>
+      <S.ReviewCount>
+        총 <strong>{sortedReviews.length}개</strong>의 후기
+      </S.ReviewCount>
       
-      {/* 후기 목록 */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      <S.ReviewList>
         {sortedReviews.length === 0 ? (
           <Card>
-            <p style={{ 
-              textAlign: 'center', 
-              color: '#9ca3af', 
-              padding: '60px 0',
-              fontSize: '16px'
-            }}>
-              해당 조건의 후기가 없습니다.
-            </p>
+            <S.EmptyState>해당 조건의 후기가 없습니다.</S.EmptyState>
           </Card>
         ) : (
           sortedReviews.map((review) => {
             const perf = performances.find(p => p.id === review.performanceId);
             return (
-              <Card key={review.id} style={{ 
-                transition: 'all 0.3s',
-                cursor: 'pointer'
-              }}
-              onClick={() => setCurrentPage && setCurrentPage(`performance-${review.performanceId}`)}
+              <Card 
+                key={review.id} 
+                onClick={() => setCurrentPage && setCurrentPage(`performance-${review.performanceId}`)}
+                style={{ cursor: 'pointer' }}
               >
-                <div style={{ display: 'flex', gap: '20px' }}>
-                  {/* 공연 썸네일 */}
-                  {perf && (
-                    <div style={{ flexShrink: 0 }}>
-                      <img 
-                        src={perf.image} 
-                        alt={perf.title} 
-                        style={{ 
-                          width: '150px', 
-                          height: '150px', 
-                          objectFit: 'cover', 
-                          borderRadius: '12px',
-                          boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
-                        }} 
-                      />
-                    </div>
-                  )}
+                <S.ReviewItemContent>
+                  {perf && <S.ThumbImage src={perf.image} alt={perf.title} />}
                   
-                  {/* 후기 내용 */}
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    {/* 헤더 */}
-                    <div style={{ 
-                      display: 'flex', 
-                      justifyContent: 'space-between', 
-                      marginBottom: '12px',
-                      alignItems: 'flex-start'
-                    }}>
+                  <S.ReviewTextSection>
+                    <S.ReviewHeader>
                       <div style={{ flex: 1 }}>
-                        {/* 작성자 & 평점 */}
-                        <div style={{ marginBottom: '8px' }}>
-                          <span style={{ 
-                            fontWeight: 'bold', 
-                            marginRight: '12px', 
-                            fontSize: '18px',
-                            color: '#1f2937'
-                          }}>
-                            {review.userName}
-                          </span>
-                          <span style={{ 
-                            color: '#f59e0b', 
-                            fontSize: '20px'
-                          }}>
-                            {'⭐'.repeat(review.rating)}
-                          </span>
-                        </div>
+                        <S.UserInfo>
+                          <S.UserName>{review.userName}</S.UserName>
+                          <S.Rating>{'⭐'.repeat(review.rating)}</S.Rating>
+                        </S.UserInfo>
                         
-                        {/* 공연 제목 */}
                         {perf && (
-                          <p style={{ 
-                            fontSize: '15px', 
-                            color: '#667eea', 
-                            marginBottom: '0', 
-                            fontWeight: '600',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px'
-                          }}>
-                            <span>🎭</span>
-                            <span>{perf.title}</span>
-                          </p>
+                          <S.PerfLink>
+                            <span>🎭</span><span>{perf.title}</span>
+                          </S.PerfLink>
                         )}
                       </div>
-                      
-                      {/* 날짜 */}
-                      <span style={{ 
-                        color: '#9ca3af',
-                        fontSize: '14px',
-                        flexShrink: 0,
-                        marginLeft: '15px'
-                      }}>
-                        {review.date}
-                      </span>
-                    </div>
+                      <S.DateText>{review.date}</S.DateText>
+                    </S.ReviewHeader>
                     
-                    {/* 후기 본문 */}
-                    <p style={{ 
-                      color: '#4b5563', 
-                      lineHeight: '1.8', 
-                      fontSize: '16px',
-                      margin: '15px 0 0 0',
-                      whiteSpace: 'pre-wrap',
-                      wordBreak: 'break-word'
-                    }}>
-                      {review.content}
-                    </p>
+                    <S.Content>{review.content}</S.Content>
                     
-                    {/* 공연 정보 태그 */}
                     {perf && (
-                      <div style={{ 
-                        marginTop: '15px',
-                        paddingTop: '15px',
-                        borderTop: '1px solid #e5e7eb',
-                        display: 'flex',
-                        gap: '15px',
-                        fontSize: '13px',
-                        color: '#6b7280'
-                      }}>
+                      <S.MetaTags>
                         <span>📅 {perf.date}</span>
                         <span>📍 {perf.location}</span>
-                        <span style={{ 
-                          background: '#f3f4f6',
-                          padding: '2px 8px',
-                          borderRadius: '4px',
-                          color: '#667eea',
-                          fontWeight: '600'
-                        }}>
-                          {perf.category}
-                        </span>
-                      </div>
+                        <S.CategoryTag>{perf.category}</S.CategoryTag>
+                      </S.MetaTags>
                     )}
-                  </div>
-                </div>
+                  </S.ReviewTextSection>
+                </S.ReviewItemContent>
               </Card>
             );
           })
         )}
-      </div>
+      </S.ReviewList>
       
-      {/* 후기 작성 유도 */}
       {reviews.length > 0 && (
-        <Card style={{ 
-          marginTop: '40px',
-          background: 'linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%)',
-          textAlign: 'center',
-          padding: '40px'
-        }}>
-          <h3 style={{ 
-            fontSize: '24px', 
-            marginBottom: '15px',
-            color: '#1f2937'
-          }}>
-            ✍️ 공연을 관람하셨나요?
-          </h3>
-          <p style={{ 
-            color: '#6b7280', 
-            marginBottom: '25px',
-            fontSize: '16px'
-          }}>
-            다른 관객들과 소중한 경험을 나눠주세요!
-          </p>
-          <Button onClick={() => setCurrentPage && setCurrentPage('performances')}>
-            공연 보러가기
-          </Button>
+        <Card style={{ marginTop: '40px', background: 'linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%)' }}>
+          <S.CTASection>
+            <h3>✍️ 공연을 관람하셨나요?</h3>
+            <p>다른 관객들과 소중한 경험을 나눠주세요!</p>
+            <Button onClick={() => setCurrentPage && setCurrentPage('performances')}>
+              공연 보러가기
+            </Button>
+          </S.CTASection>
         </Card>
       )}
     </Container>
