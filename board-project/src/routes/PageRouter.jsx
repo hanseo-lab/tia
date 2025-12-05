@@ -1,26 +1,26 @@
 import React from 'react';
-import { HomePage } from '../pages/HomePage';
-import { PerformancesPage } from '../pages/PerformancesPage';
-import { PerformanceDetailPage } from '../pages/PerformanceDetailPage';
+import { Home } from '../pages/Home';
+import { Performances } from '../pages/Performances';
+import { PerformanceDetail } from '../pages/PerformanceDetail';
 import { ReviewsPage } from '../pages/ReviewsPage';
 import { MyPage } from '../pages/Mypage';
-import { LoginPage } from '../pages/LoginPage';
+import { Login } from '../pages/Login';
 
 export const PageRouter = ({ currentPage, setCurrentPage }) => {
   // 홈 페이지
   if (currentPage === 'home') {
-    return <HomePage setCurrentPage={setCurrentPage} />;
+    return <Home setCurrentPage={setCurrentPage} />;
   }
   
   // 공연 목록 페이지
   if (currentPage === 'performances') {
-    return <PerformancesPage setCurrentPage={setCurrentPage} />;
+    return <Performances setCurrentPage={setCurrentPage} />;
   }
   
   // 공연 상세 페이지
   if (currentPage.startsWith('performance-')) {
     const id = currentPage.split('-')[1];
-    return <PerformanceDetailPage performanceId={id} setCurrentPage={setCurrentPage} />;
+    return <PerformanceDetail performanceId={id} setCurrentPage={setCurrentPage} />;
   }
   
   // 전체 후기 페이지
@@ -35,9 +35,9 @@ export const PageRouter = ({ currentPage, setCurrentPage }) => {
   
   // 로그인/회원가입 페이지
   if (currentPage === 'login') {
-    return <LoginPage setCurrentPage={setCurrentPage} />;
+    return <Login setCurrentPage={setCurrentPage} />;
   }
   
   // 기본값: 홈 페이지
-  return <HomePage setCurrentPage={setCurrentPage} />;
+  return <Home setCurrentPage={setCurrentPage} />;
 };

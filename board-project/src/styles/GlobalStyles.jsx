@@ -1,4 +1,3 @@
-// styles/GlobalStyles.jsx
 import React from 'react';
 
 export const GlobalStyles = () => (
@@ -14,20 +13,19 @@ export const GlobalStyles = () => (
                    'Helvetica', 'Arial', sans-serif;
       line-height: 1.6;
       color: #1f2937;
+      background-color: #ffffff; /* 순백색 배경 권장 */
     }
     
     button {
       font-family: inherit;
     }
     
-    button:hover {
-      opacity: 0.9;
-    }
-    
+    /* 포커스 색상을 오렌지로 변경 */
     input:focus, 
     textarea:focus {
       outline: none;
-      border-color: #667eea;
+      border-color: #EA580C !important;
+      box-shadow: 0 0 0 2px rgba(234, 88, 12, 0.2);
     }
     
     img {
@@ -35,22 +33,22 @@ export const GlobalStyles = () => (
       height: auto;
     }
     
-    /* 스크롤바 스타일 */
+    /* 스크롤바 스타일 (오렌지) */
     ::-webkit-scrollbar {
       width: 10px;
     }
     
     ::-webkit-scrollbar-track {
-      background: #f1f1f1;
+      background: #f3f4f6;
     }
     
     ::-webkit-scrollbar-thumb {
-      background: #667eea;
+      background: #fdba74; /* 연한 오렌지 */
       border-radius: 5px;
     }
     
     ::-webkit-scrollbar-thumb:hover {
-      background: #764ba2;
+      background: #EA580C; /* 진한 오렌지 */
     }
   `}</style>
 );

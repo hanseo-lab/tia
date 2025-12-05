@@ -1,6 +1,5 @@
-// pages/ReviewsPage.jsx
 import React, { useState } from 'react';
-import { Container, Card, Button } from '../components/StyledComponents';
+import { Container, Card, Button } from '../components/common';
 import { usePerformanceStore } from '../store/performanceStore';
 
 export const ReviewsPage = ({ setCurrentPage }) => {

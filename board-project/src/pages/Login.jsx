@@ -1,9 +1,8 @@
-// pages/LoginPage.jsx
 import React, { useState } from 'react';
-import { Container, Card, Button, Input } from '../components/StyledComponents';
+import { Container, Card, Button, Input } from '../components/common';
 import { useAuthStore } from '../store/authStore';
 
-export const LoginPage = ({ setCurrentPage }) => {
+export const Login = ({ setCurrentPage }) => {
   const { login } = useAuthStore();
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({ 
@@ -35,16 +34,29 @@ export const LoginPage = ({ setCurrentPage }) => {
   };
   
   return (
-    <Container style={{ maxWidth: '500px', marginTop: '50px' }}>
-      <Card>
-        <h1 style={{ 
-          fontSize: '32px', 
-          textAlign: 'center', 
-          marginBottom: '30px', 
-          color: '#1f2937' 
-        }}>
-          🔐 {isLogin ? '로그인' : '회원가입'}
-        </h1>
+    <Container style={{ 
+      display: 'flex', 
+      justifyContent: 'center', 
+      alignItems: 'center', 
+      minHeight: '600px' 
+    }}>
+      <Card style={{ width: '100%', maxWidth: '450px', padding: '40px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '30px' }}>
+           <span style={{ fontSize: '48px', marginBottom: '10px', display: 'block' }}>
+             {isLogin ? '🔐' : '👋'}
+           </span>
+           <h1 style={{ 
+            fontSize: '32px', 
+            marginBottom: '10px', 
+            color: '#1f2937',
+            fontWeight: '800'
+          }}>
+            {isLogin ? '로그인' : '회원가입'}
+          </h1>
+          <p style={{ color: '#6b7280' }}>
+            {isLogin ? 'TIA 태권도 선교단에 오신 것을 환영합니다.' : '새로운 계정을 생성하여 시작하세요.'}
+          </p>
+        </div>
         
         {!isLogin && (
           <Input
@@ -60,7 +72,7 @@ export const LoginPage = ({ setCurrentPage }) => {
           type="email"
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          placeholder="이메일을 입력하세요"
+          placeholder="user@example.com"
         />
         
         <Input
@@ -71,21 +83,25 @@ export const LoginPage = ({ setCurrentPage }) => {
           placeholder="비밀번호를 입력하세요"
         />
         
-        <Button onClick={handleSubmit} style={{ width: '100%', marginBottom: '15px' }}>
-          {isLogin ? '로그인' : '회원가입'}
+        <Button 
+          onClick={handleSubmit} 
+          style={{ width: '100%', marginBottom: '20px', padding: '14px', fontSize: '16px' }}
+        >
+          {isLogin ? '로그인하기' : '가입하기'}
         </Button>
         
-        <p style={{ textAlign: 'center', color: '#6b7280' }}>
+        <p style={{ textAlign: 'center', color: '#6b7280', fontSize: '14px' }}>
           {isLogin ? '계정이 없으신가요?' : '이미 계정이 있으신가요?'}
           <button
             onClick={() => setIsLogin(!isLogin)}
             style={{
               background: 'none',
               border: 'none',
-              color: '#667eea',
-              fontWeight: '600',
+              color: '#EA580C', // 오렌지색 링크
+              fontWeight: '700',
               cursor: 'pointer',
-              marginLeft: '8px'
+              marginLeft: '8px',
+              textDecoration: 'underline'
             }}
           >
             {isLogin ? '회원가입' : '로그인'}
