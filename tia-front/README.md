@@ -1,16 +1,42 @@
-# React + Vite
+# TIA 태권도 선교단 웹사이트 (Frontend)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+이 프로젝트는 TIA 태권도 선교단의 공식 웹사이트 프론트엔드 레포지토리입니다.
 
-Currently, two official plugins are available:
+## 🚀 시작하기 (Getting Started)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 사전 요구사항
+- Node.js (v18 이상 권장)
+- npm
 
-## React Compiler
+### 설치 및 실행
+```bash
+# 의존성 설치
+npm install
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+# 개발 서버 실행
+npm run dev
+```
 
-## Expanding the ESLint configuration
+## 🛠 기술 스택 (Tech Stack)
+- **Core**: React, Vite
+- **Styling**: Styled-Components (GlobalStyles 적용)
+- **State Management**: Zustand
+- **Routing**: React Router DOM
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📁 프로젝트 구조
+- `src/api`: API 통신 관련 로직
+- `src/assets`: 이미지 및 정적 파일 (로고 등)
+- `src/components`: 재사용 가능한 컴포넌트
+- `src/pages`: 각 라우트별 페이지 컴포넌트
+- `src/routes`: 라우팅 설정
+- `src/store`: Zustand 상태 관리 스토어
+- `src/styles`: 전역 스타일 및 테마 설정
+
+## 🎨 주요 기능
+- **홈페이지**: TIA의 아이덴티티를 보여주는 반응형 메인 페이지
+- **사역 신청**: 외부 단체의 사역 요청을 접수하는 폼
+- **갤러리**: 사역 활동 사진 및 영상을 볼 수 있는 갤러리
+- **기도 나눔**: 기도 제목을 나누고 함께 기도하는 커뮤니티
+
+## 📝 라이선스
+Copyright © 2024 TIA Taekwondo Mission Team. All Rights Reserved.
